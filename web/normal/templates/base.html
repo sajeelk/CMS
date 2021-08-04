@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+<title>user view</title>
+<style>
+	a, a:visited { color: blue; }
+	a:hover { color: #4287f5; }
+</style>
+<a href='http://localhost:5000/'>admin panel</a>
+<h1><a href='{{ url_for("index") }}'>user view</a></h1>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+{% block content %}
+{% endblock %}

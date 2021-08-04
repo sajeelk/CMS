@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+
+<ul>
+{% for p in products %}
+	<li><a href='{{ url_for("product_view", _id=p["_id"]) }}'>{{ p["name"] }}</a> &nbsp;<a href='{{ url_for("product_edit", _id=p["_id"]) }}'>Update</a> &nbsp;<a href='{{ url_for("delete_product", _id=p["_id"]) }}'>Delete</a></li>
+{% endfor %}
+	<li><a href="{{ url_for('new_product', _id=c['_id'] ) }}">Add</a></li>
+	<li><a href="" onclick="window.history.go(-1); return false;">Back</a></li>
+</ul>
+
+{% endblock %}

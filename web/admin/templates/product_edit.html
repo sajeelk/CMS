@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+
+<ul>
+	<li><input type="text" id="name" placeholder="Name" value='{{ p["name"] }}' /></li>
+	<li><input type="text" id="price" placeholder="Price (in cents)" value='{{ p["price"] }}' />&cent;</li>
+	<li><textarea placeholder="Description" id="description" cols="30" rows="10">{{ p["description"] }}</textarea></li>
+	<li><button id="updateProduct">Update</button></li>
+
+</ul>
+<script>
+	$('#updateProduct').click(function(){
+		var new_p = { new_p : {
+					_id: '{{ p["_id"] }}',
+					category: '{{ c["name"] }}',
+					category_id: '{{ c["_id"] }}',
+					name: $('#name').val(),
+					price: $('#price').val(),
+					description: $('#description').val()
+				}};
+		console.log(new_p);
+		$.ajax({
+			type: 'POST',
+			url: 'http://localhost:8000/update_product/',
+			crossDomain: true,
+			data: JSON.stringify(new_p),
+			contentType:'application/json; charset=utf-8',
+			dataType: 'json',
+			success: function(){
+				$(location).attr('href', 'http://localhost:5000/category/' + '{{ c["_id"] }}');
+			}
+		});
+	});
+</script>
+{% endblock %}

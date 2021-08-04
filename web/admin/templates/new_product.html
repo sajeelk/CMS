@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+
+<ul>
+	<li>add product to <span id="c">{{ c["name"] }}</span></li>
+	<li><input type="text" id="name" placeholder="Name" /></li>
+	<li><input type="text" id="price" placeholder="Price (in cents)" />&cent;</li>
+	<li><textarea placeholder="Description" id="description" cols="30" rows="10"></textarea></li>
+	<li><button id="addProduct">Create</button></li>
+</ul>
+<script>
+	$('#addProduct').click(function(){
+		var p = { p : {
+					category: $('#c').html(),
+					name: $('#name').val(),
+					price: $('#price').val(),
+					description: $('#description').val()
+				}};
+		$.ajax({
+			type: 'POST',
+			url : 'http://localhost:8000/new_product/',
+			crossDomain: true,
+			data: JSON.stringify(p),
+			contentType:'application/json; charset=utf-8',
+			dataType: 'json',
+			success: function(){
+				$(location).attr('href', 'http://localhost:5000/category/' + '{{ c["_id"] }}');
+			}
+		});
+	});
+</script>
+{% endblock %}

@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% block content %}
+
+<ul id="list">
+{% for c in categories %}
+	<li><a href='{{ url_for("category_view", _id=c["_id"]) }}'>{{ c["name"] }}</a> &nbsp;<a href='{{ url_for("delete_category", _id=c["_id"]) }}'>Delete</a></li>
+{% endfor %}
+	<li><input type='text' id='add'/><button id="addCategory">Add</button></li>
+</ul>
+<script>
+	$('#addCategory').click(function(){
+		var n = { name : $('#add').val() };
+		$.ajax({
+			type: 'POST',
+			url : 'http://localhost:8000/new_category/',
+			crossDomain: true,
+			data: JSON.stringify(n),
+			contentType:'application/json; charset=utf-8',
+			dataType: 'json',
+			success: function(){
+				$('#add').val('');
+				$.getJSON("http://localhost:8000/categories", function(arr){
+					$('#list').html('');
+					for (var i = 0; i < arr.length; i++) {
+						$("#list").append("<li><a href='/category/" + arr[i]["_id"] + "'>" + arr[i]["name"] + "</a> &nbsp;<a href='/delete_category/" + arr[i]["_id"] + "'>Delete</a></li>");
+					}
+					$('#list').append("<li><input type='text' id='add'/><button id=\"addCategory\">Add</button></li>");
+				});
+			}
+		});		
+	});
+</script>
+{% endblock %}
